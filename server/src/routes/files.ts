@@ -5,7 +5,7 @@ import { BAD_REQUEST, INTERNAL_SERVER_ERROR, OK } from 'http-status';
 import { IsString } from 'class-validator';
 import * as multer from 'multer';
 import { parse } from 'iptv-playlist-parser'
-import { ParsedFile } from '../../types/types';
+import { ParsedFile } from '../types/types';
 import { File, Group } from '.prisma/client';
 import { prisma } from '../prisma';
 
