@@ -1,0 +1,33 @@
+version: "3"
+
+services:
+  server:
+    build:
+      args:
+        NODE_ENV: production
+    ports:
+      - "8081:8081"
+    environment:
+      NODE_ENV: production
+      CORS: https://hw.box.noerls.com
+    entrypoint: sh -c "sleep 10 && npm run-script db && npm run-script start"
+    restart: always
+
+  client:
+    ports:
+      - "3001:3000"
+    entrypoint: npx serve -s build/ -l 3000
+    environment:
+      NODE_ENV: production
+    build:
+      args:
+        NODE_ENV: production
+        REACT_APP_API_URL: https://hw-api.box.noerls.com
+    restart: always
+
+  database:
+    ports:
+      - "5433:5432"
+    volumes:
+      - /home/noe/hw/db:/var/lib/postgresql/data
+    restart: always

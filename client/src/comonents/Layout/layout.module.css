@@ -1,0 +1,32 @@
+.container {
+    width: 100vw;
+    overflow: hidden;
+}
+
+.header {
+    height: 10vh;
+}
+
+.contentContainer {
+    display: flex;
+    overflow-y: scroll;
+    height: 90vh
+}
+
+.contentBorder {
+    flex-grow: 1;
+}
+
+.contentBody {
+    flex-grow: 0;
+    width: 100%;
+    max-width: 500px;
+    text-align: center;
+    padding-top: 20px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.faq {
+    max-width: 700px;
+}

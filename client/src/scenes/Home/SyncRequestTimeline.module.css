@@ -1,0 +1,18 @@
+@keyframes wink {
+    0%   {background-color: grey;}
+    50%  {background-color: green;}
+    100% {background-color: grey;}
+}
+
+.loadingDot {
+    position: absolute;
+    top: 8px;
+    height: 12px;
+    width: 12px;
+    background-color: green;
+    border-radius: 100px;
+    animation-iteration-count:infinite;
+    animation-name: wink;
+    animation-duration: 1.5s;
+    animation-timing-function: ease;
+}
