@@ -1,0 +1,26 @@
+{
+    "extends": "tslint:recommended",
+    "rules": {
+        "trailing-comma": [
+            true,
+            {
+                "multiline": "always",
+                "singleline": "never"
+            }
+        ],
+        "no-console": false,
+        "semicolon": [
+            true,
+            "always"
+        ],
+        "max-line-length": {
+            "options": [
+                120
+            ]
+        },
+        "new-parens": true,
+        "no-arg": true,
+        "no-bitwise": true,
+        "no-conditional-assignment": true
+    }
+}
