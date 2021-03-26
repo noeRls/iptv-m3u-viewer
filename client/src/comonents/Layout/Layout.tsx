@@ -6,9 +6,11 @@ import { Snackbar } from './Snackbar';
 export const Layout: React.FC = ({ children }) => {
     return (
         <div className={style.container}>
-            <Header />
-            <div className={style.contentContainer}>
-                <div className={style.contentBody}>{children}</div>
+            <div className={style.header}>
+                <Header />
+            </div>
+            <div className={style.bodyContainer}>
+                <div className={style.contentContainer}>{children}</div>
             </div>
             <Snackbar />
         </div>

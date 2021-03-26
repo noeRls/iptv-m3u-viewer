@@ -1,0 +1,31 @@
+.container {
+    width: 400px;
+    height: 140px;
+    display: flex;
+    flex-direction: row;
+    cursor: pointer;
+    background-color: white;
+    transition: 0.2s !important;
+    padding: 10px;
+}
+
+.container:hover {
+    background-color: lightgrey;
+}
+
+.contentContainer {
+    flex-grow: 1;
+    text-align: left;
+}
+
+.image {
+    max-height: 140px;
+    max-width: 140px;
+}
+
+.imageContainer {
+    flex-shrink: 0;
+    justify-content: right;
+    text-align: center;
+    align-items: center;
+}

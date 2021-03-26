@@ -4,12 +4,15 @@
 }
 
 .header {
-    height: 10vh;
+    height: 7vh;
+}
+
+.bodyContainer {
+    height: 93vh;
+    overflow-y: scroll;
 }
 
 .contentContainer {
-    overflow-y: scroll;
-    height: 90vh;
     text-align: center;
     padding: 20px;
 }
