@@ -1,27 +1,49 @@
 import React, { useCallback } from 'react';
-import { AppBar, Toolbar, Typography, Button } from '@material-ui/core';
-import { useSelector, useDispatch } from 'react-redux';
-import { selectUser } from 'store/selector/app';
-import { DisplayIf } from 'comonents/DisplayIf';
-import style from './Header.module.css';
-import { logout } from 'store/reducer';
+import { AppBar, IconButton, Link, ListItem, ListItemIcon, ListItemText, makeStyles, MenuItem, Toolbar, Typography } from '@material-ui/core';
+import { FilterList, Description } from '@material-ui/icons';
+import ListIcon from '@material-ui/icons/List';
+import { urls } from 'services/urls';
+import { useHistory } from 'react-router';
+
+const useStyle = makeStyles({
+    listIcon: {
+        color: 'white',
+    }
+});
 
 export const Header = () => {
-    const user = useSelector(selectUser);
-    const dispatch = useDispatch();
-    const onLogout = useCallback(() => {
-        dispatch(logout());
-    }, [dispatch]);
+    const overrideStyle = useStyle();
+    const history = useHistory();
+    const navigationItems = [
+        {
+            url: urls.home,
+            icon: <ListIcon />,
+            text: 'Channels',
+        },
+        {
+            url: urls.filters,
+            icon: <FilterList />,
+            text: 'Filters',
+        },
+        {
+            url: urls.files,
+            icon: <Description />,
+            text: 'Files',
+        },
+    ];
+
     return (
         <AppBar position="static">
             <Toolbar>
-                <Typography variant="h6">Heriot Watt calendar exporter</Typography>
-                <div className={style.divider} />
-                <DisplayIf expr={Boolean(user)}>
-                    <Button color="inherit" onClick={onLogout}>
-                        Logout
-                    </Button>
-                </DisplayIf>
+                <Typography variant="h6">M3U Viewer</Typography>
+                {navigationItems.map((item) => (
+                    <MenuItem key={item.text}>
+                        <ListItem onClick={() => history.push(item.url)}>
+                            <ListItemIcon className={overrideStyle.listIcon} >{item.icon}</ListItemIcon>
+                            <ListItemText primary={item.text} />
+                        </ListItem>
+                    </MenuItem>
+                ))}
             </Toolbar>
         </AppBar>
     );

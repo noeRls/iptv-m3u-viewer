@@ -1,7 +1,7 @@
 import * as express from 'express';
-import { init as initDb } from './app/prisma';
-import routes from './app/routes';
-import { corsMiddleware } from './app/middleware';
+import { init as initDb } from './prisma';
+import routes from './routes';
+import { corsMiddleware } from './middleware';
 import * as logger from 'morgan';
 
 const start = async () => {

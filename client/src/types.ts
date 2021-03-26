@@ -1,27 +1,51 @@
-import { google, calendar_v3 } from 'googleapis';
-
-export type OAuth2Client = typeof google.auth.OAuth2.prototype;
-export type Credentials = typeof google.auth.OAuth2.prototype.credentials;
-export type Calendar = calendar_v3.Schema$CalendarListEntry;
-export type Event = calendar_v3.Schema$Event;
-
-export interface Block {
-    title: string;
-    id: string;
+export interface File {
+    name: string,
+    savedPath: string,
+    entrys: Entry[]
 }
 
-export interface CourseDetail {
-    title?: string;
-    code?: string;
-    teachingWeek?: string;
-    locations: string[];
-    activityType?: string;
-    professor?: string;
+export interface Entry {
+    groupName: string,
+    logo: string,
+    name: string,
+    language: string,
+    contry: string,
+    url: string,
 }
 
-export interface Course {
-    block: Block;
-    start: number;
-    end: number;
-    detail: CourseDetail;
+export interface Filter {
+    groupName?: string;
+    includeKeywords?: string[];
+    excludeKeywords?: string[];
 }
+
+/*
+model File {
+    id Int @id @default(autoincrement())
+    name String
+    entrys Entry[]
+  }
+  
+  model Group {
+    name String @id
+    entrys Entry[]
+  }
+  
+  model Entry {
+    id Int @id @default(autoincrement())
+    file File @relation(fields: [fileId], references: [id])
+    fileId Int
+    group Group @relation(fields: [groupName], references: [name])
+    groupName String
+    logo String
+    name String
+    url String
+  }
+  
+  model Filter {
+    id Int @id @default(autoincrement())
+    groupName String?
+    includeKeyword String[]
+    excludeKeyword String[]
+  }
+  */

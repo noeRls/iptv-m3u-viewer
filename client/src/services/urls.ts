@@ -1,5 +1,5 @@
 export const urls = {
     home: '/',
-    login: '/login',
-    faq: '/faq',
+    filters: '/filters',
+    files: '/files'
 };

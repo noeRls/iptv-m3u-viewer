@@ -72,9 +72,7 @@ const fetchEntrys = async (filters: FilterWithoutId[], offset: number, max: numb
     }
     return prisma.entry.findMany({
         where: {
-            AND: {
-                OR: globalInclude.map(include => ({ name: { contains: include } }))
-            },
+            OR: globalInclude.map(include => ({ name: { contains: include } })),
             NOT: globalExclude.map(exclude => ({name: { contains: exclude }})),
         },
         skip: offset,
