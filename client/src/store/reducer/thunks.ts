@@ -7,17 +7,18 @@ import { File, Filter } from 'types';
 import { localStoageGet, localStorageSet } from 'services/utils';
 
 export const loadFile = createAsyncThunk('files/load', async ({ name, data }: { name: string, data: string }, thunkAPI): Promise<File> => {
-    const files = selectFiles(thunkAPI.getState() as RootState)
-    console.log('hello');
-    if (files.some(file => file.name === name)) {
-        // TODO give user feedback
-        console.log('existing!!!');
-        throw new Error('File with the same name exists');
-    }
     const file = parse(data);
-    const savePath = STORAGE_KEY.ROW_FILE(name);
+    let savePath: string | null = null;
+    const files = selectFiles(thunkAPI.getState() as RootState)
+    for (let i = 0; ; i++) {
+        savePath = `file:${name}${i}`;
+        if (!files.some(f => f.savedPath === savePath)) {
+            break;
+        }
+    }
     localStorageSet(savePath, data).catch(console.error);
     return {
+        id: savePath,
         name,
         savedPath: savePath,
         entrys: file.items.map(item => ({

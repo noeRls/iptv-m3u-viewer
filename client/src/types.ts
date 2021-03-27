@@ -1,4 +1,5 @@
 export interface File {
+    id: string,
     name: string,
     savedPath: string,
     entrys: Entry[]

@@ -65,6 +65,15 @@ export const appSlice = createSlice({
         setGroupNameFilter: (state, { payload }: PayloadAction<string>) => {
             state.groupFilter = payload;
         },
+        deleteFile: (state, { payload }: PayloadAction<File>) => {
+            const index = state.files.findIndex(file => file.id === payload.id);
+            if (index === -1) {
+                setSnackbarMessage(state, 'Failed to delete file', 'error');
+                return;
+            }
+            state.files.splice(index, 1);
+            localStorageSet(STORAGE_KEY.FILES, JSON.stringify(state.files)).catch(console.error);
+        },
     },
     extraReducers: (builder) => {
         builder.addCase(loadFile.fulfilled, (state, { payload }) => {
@@ -91,6 +100,7 @@ export const appSlice = createSlice({
 export const {
     addFilter,
     setSearch,
+    deleteFile,
     setGroupNameFilter,
     snackBarMessagePublished,
     snackbarVisibillityChanged,
