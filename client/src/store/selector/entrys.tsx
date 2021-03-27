@@ -4,7 +4,7 @@ import { Entry, Filter } from 'types';
 
 export const selectFiles = createSelector(selectAppState, state => state.files);
 
-const selectPemanentFilter = createSelector(selectAppState, state => state.permanentFilter);
+export const selectPemanentFilter = createSelector(selectAppState, state => state.permanentFilter);
 
 export const selectSearch = createSelector(selectAppState, state => state.search);
 export const selectGroupFilter = createSelector(selectAppState, state => state.groupFilter);

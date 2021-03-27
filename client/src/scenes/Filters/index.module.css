@@ -1,0 +1,21 @@
+.filterCard {
+    margin: 15px;
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.filterCard > * {
+    padding: 10px;
+}
+.cardsContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.groupFilter {
+    width: 300px;
+}

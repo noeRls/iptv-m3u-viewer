@@ -38,6 +38,12 @@ const setSnackbarMessage = (state: AppSliceState, message: string, severity: Ale
     };
 };
 
+const cleanFilter = ({ excludeKeywords, includeKeywords, groupName }: Filter): Filter => ({
+    excludeKeywords: excludeKeywords?.map(w => w.toLowerCase()),
+    includeKeywords: includeKeywords?.map(w => w.toLowerCase()),
+    groupName
+});
+
 export const appSlice = createSlice({
     name: 'app',
     initialState: initialState,
@@ -52,11 +58,7 @@ export const appSlice = createSlice({
             setSnackbarMessage(state, action.payload.message, action.payload.severity);
         },
         addFilter: (state, { payload }: PayloadAction<Filter>) => {
-            const cleanFilter: Filter = {
-                excludeKeywords: payload.excludeKeywords?.map(w => w.toLowerCase()),
-                includeKeywords: payload.includeKeywords?.map(w => w.toLowerCase()),
-            }
-            state.permanentFilter.push(cleanFilter);
+            state.permanentFilter.push(cleanFilter(payload));
             localStorageSet(STORAGE_KEY.FILTERS, JSON.stringify(state.permanentFilter)).catch(console.error);
         },
         setSearch: (state, { payload }: PayloadAction<string>) => {
@@ -74,6 +76,13 @@ export const appSlice = createSlice({
             state.files.splice(index, 1);
             localStorageSet(STORAGE_KEY.FILES, JSON.stringify(state.files)).catch(console.error);
         },
+        modifyFilter: (state, { payload }: PayloadAction<{ index: number, update: Filter }>) => {
+            state.permanentFilter[payload.index] = cleanFilter(payload.update);
+            localStorageSet(STORAGE_KEY.FILTERS, JSON.stringify(state.permanentFilter)).catch(console.error);
+        },
+        deleteFilter: (state, { payload }: PayloadAction<number>) => {
+            state.permanentFilter.splice(payload, 1);
+        }
     },
     extraReducers: (builder) => {
         builder.addCase(loadFile.fulfilled, (state, { payload }) => {
@@ -100,6 +109,8 @@ export const appSlice = createSlice({
 export const {
     addFilter,
     setSearch,
+    modifyFilter,
+    deleteFilter,
     deleteFile,
     setGroupNameFilter,
     snackBarMessagePublished,
