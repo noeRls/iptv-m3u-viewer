@@ -6,6 +6,8 @@ export const selectFiles = createSelector(selectAppState, state => state.files);
 
 export const selectPemanentFilter = createSelector(selectAppState, state => state.permanentFilter);
 
+export const selectUsingPermanentFilter = createSelector(selectAppState, state => state.usingPermanentFilter);
+
 export const selectSearch = createSelector(selectAppState, state => state.search);
 export const selectGroupFilter = createSelector(selectAppState, state => state.groupFilter);
 const selectTemporaryFilter = createSelector(
@@ -26,7 +28,9 @@ const selectTemporaryFilter = createSelector(
 export const selectFilters = createSelector(
     selectPemanentFilter,
     selectTemporaryFilter,
-    (permanentFilter, temporaryFilter): Filter[] => [...permanentFilter, ...temporaryFilter],
+    selectUsingPermanentFilter,
+    (permanentFilter, temporaryFilter, usingPermanentFilter): Filter[] =>
+        usingPermanentFilter ? [...permanentFilter, ...temporaryFilter] : temporaryFilter,
 )
 
 export const selectAllGroups = createSelector(

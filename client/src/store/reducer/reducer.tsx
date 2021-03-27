@@ -11,6 +11,7 @@ export interface AppSliceState {
     search: string
     groupFilter: string
     permanentFilter: Filter[],
+    usingPermanentFilter: boolean,
     snakbar: {
         open: boolean,
         message?: string,
@@ -21,6 +22,7 @@ export interface AppSliceState {
 const initialState: AppSliceState = {
     loaded: false,
     search: '',
+    usingPermanentFilter: true,
     groupFilter: '',
     permanentFilter: [],
     files: [],
@@ -82,6 +84,9 @@ export const appSlice = createSlice({
         },
         deleteFilter: (state, { payload }: PayloadAction<number>) => {
             state.permanentFilter.splice(payload, 1);
+        },
+        setUsingPermanentFilter: (state, { payload }: PayloadAction<boolean>) => {
+            state.usingPermanentFilter = payload;
         }
     },
     extraReducers: (builder) => {
@@ -115,4 +120,5 @@ export const {
     setGroupNameFilter,
     snackBarMessagePublished,
     snackbarVisibillityChanged,
+    setUsingPermanentFilter,
 } = appSlice.actions;
