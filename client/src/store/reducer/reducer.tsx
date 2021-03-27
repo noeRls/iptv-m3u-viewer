@@ -8,8 +8,9 @@ import { localStorageSet } from 'services/utils';
 export interface AppSliceState {
     loaded: boolean,
     files: File[],
+    search: string
+    groupFilter: string
     permanentFilter: Filter[],
-    temporaryFilter: Filter[],
     snakbar: {
         open: boolean,
         message?: string,
@@ -19,8 +20,9 @@ export interface AppSliceState {
 
 const initialState: AppSliceState = {
     loaded: false,
+    search: '',
+    groupFilter: '',
     permanentFilter: [],
-    temporaryFilter: [],
     files: [],
     snakbar: {
         open: false,
@@ -49,13 +51,19 @@ export const appSlice = createSlice({
         ) => {
             setSnackbarMessage(state, action.payload.message, action.payload.severity);
         },
-        addFilter: (state, { payload }: PayloadAction<{ permanent: boolean, filter: Filter }>) => {
-            if (payload.permanent) {
-                state.permanentFilter.push(payload.filter);
-                localStorageSet(STORAGE_KEY.FILTERS, JSON.stringify(state.permanentFilter)).catch(console.error);
-            } else {
-                state.temporaryFilter.push(payload.filter);
+        addFilter: (state, { payload }: PayloadAction<Filter>) => {
+            const cleanFilter: Filter = {
+                excludeKeywords: payload.excludeKeywords?.map(w => w.toLowerCase()),
+                includeKeywords: payload.includeKeywords?.map(w => w.toLowerCase()),
             }
+            state.permanentFilter.push(cleanFilter);
+            localStorageSet(STORAGE_KEY.FILTERS, JSON.stringify(state.permanentFilter)).catch(console.error);
+        },
+        setSearch: (state, { payload }: PayloadAction<string>) => {
+            state.search = payload.toLowerCase();
+        },
+        setGroupNameFilter: (state, { payload }: PayloadAction<string>) => {
+            state.groupFilter = payload;
         },
     },
     extraReducers: (builder) => {
@@ -82,6 +90,8 @@ export const appSlice = createSlice({
 
 export const {
     addFilter,
+    setSearch,
+    setGroupNameFilter,
     snackBarMessagePublished,
     snackbarVisibillityChanged,
 } = appSlice.actions;

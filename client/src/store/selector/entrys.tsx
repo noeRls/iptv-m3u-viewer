@@ -5,7 +5,23 @@ import { Entry, Filter } from 'types';
 export const selectFiles = createSelector(selectAppState, state => state.files);
 
 const selectPemanentFilter = createSelector(selectAppState, state => state.permanentFilter);
-const selectTemporaryFilter = createSelector(selectAppState, state => state.temporaryFilter);
+
+export const selectSearch = createSelector(selectAppState, state => state.search);
+export const selectGroupFilter = createSelector(selectAppState, state => state.groupFilter);
+const selectTemporaryFilter = createSelector(
+    selectGroupFilter,
+    selectSearch,
+    (groupName, search): Filter[] => {
+        const filters: Filter[] = [];
+        if (search.length > 0) {
+            filters.push({ includeKeywords: search.split(' ') });
+        }
+        if (groupName.length > 0) {
+            filters.push({ groupName });
+        }
+        return filters;
+    }
+);
 
 export const selectFilters = createSelector(
     selectPemanentFilter,
@@ -13,17 +29,25 @@ export const selectFilters = createSelector(
     (permanentFilter, temporaryFilter): Filter[] => [...permanentFilter, ...temporaryFilter],
 )
 
+export const selectAllGroups = createSelector(
+    selectFiles,
+    (files): string[] => Object.keys(files.reduce<Record<string, boolean>>((result, file) => {
+        file.entrys.forEach(entry => result[entry.groupName] = true);
+        return result;
+    }, {})),
+)
+
 const filterEntrys = (entrys: Entry[], filters: Filter[]): Entry[] => {
     const filterWithGroupName = filters.filter(filter => filter.groupName);
     const filterWithoutGroupName = filters.filter(filter => !filter.groupName);
 
-    const globalInclude = filterWithoutGroupName.reduce<string[]>((result, filter) => {
+    const globalExclude = filterWithoutGroupName.reduce<string[]>((result, filter) => {
         if (!filter.excludeKeywords) {
             return result;
         }
         return [...result, ...filter.excludeKeywords];
     }, []);
-    const globalExclude = filterWithoutGroupName.reduce<string[]>((result, filter) => {
+    const globalInclude = filterWithoutGroupName.reduce<string[]>((result, filter) => {
         if (!filter.includeKeywords) {
             return result;
         }
@@ -31,24 +55,25 @@ const filterEntrys = (entrys: Entry[], filters: Filter[]): Entry[] => {
     }, []);
 
     return entrys.filter((entry => {
+        const entryName = entry.name.toLowerCase();
         if (filterWithGroupName.length > 0) {
             const filter = filterWithGroupName.find(f => f.groupName === entry.groupName);
             if (!filter) {
                 return false;
             }
             if (filter.includeKeywords && filter.includeKeywords.length > 0 &&
-                !filter.includeKeywords.some(word => entry.name.includes(word))
+                !filter.includeKeywords.every(word => entryName.includes(word))
             ) {
                 return false;
             }
-            if (filter.excludeKeywords && filter.excludeKeywords.some(word => entry.name.includes(word))) {
+            if (filter.excludeKeywords && filter.excludeKeywords.some(word => entryName.includes(word))) {
                 return false;
             }
         }
-        if (globalInclude.length > 0 && !globalInclude.some(word => entry.name.includes(word))) {
+        if (globalInclude.length > 0 && !globalInclude.every(word => entryName.includes(word))) {
             return false;
         }
-        if (globalExclude.some(word => entry.name.includes(word))) {
+        if (globalExclude.some(word => entryName.includes(word))) {
             return false;
         }
         return true;
@@ -62,4 +87,12 @@ export const selectEntry = createSelector(selectFiles, selectFilters,
             ...filterEntrys(file.entrys, filters),
         ], []);
     }
+)
+
+export const selectGroups = createSelector(
+    selectEntry,
+    (entrys) => Object.keys(entrys.reduce<Record<string, boolean>>((result, entry) => {
+        result[entry.groupName] = true;
+        return result;
+    }, {}))
 )
