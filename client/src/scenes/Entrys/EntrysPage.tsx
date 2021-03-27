@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { selectEntry } from 'store/selector/entrys';
 import { Entrys } from './Entrys';
-import style from './entryspage.module.css'
 import { NavigateBefore, NavigateNext } from '@material-ui/icons';
 import { IconButton } from '@material-ui/core';
 import { QuickFilter } from './QuickFilter/QuickFilter';

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Layout } from './comonents/Layout/Layout';
-import { Switch, Route } from 'react-router-dom';
+import { Switch } from 'react-router-dom';
 import { urls } from 'services/urls';
 import { Files } from 'scenes/Files/Files';
 import { useDispatch, useSelector } from 'react-redux';

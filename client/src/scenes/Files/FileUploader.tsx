@@ -1,5 +1,5 @@
 import { Button } from '@material-ui/core';
-import React, { ChangeEvent, useCallback, useState } from 'react';
+import React, { ChangeEvent, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { loadFile, snackBarMessagePublished } from 'store/reducer';
 import style from './index.module.css';

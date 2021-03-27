@@ -1,11 +1,7 @@
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
-import { selectEntry } from 'store/selector/entrys';
+import React from 'react';
 import { Entry } from 'types';
 import { EntryComponent } from './EntryComponent';
 import style from './entrys.module.css'
-
-const MAX_PER_PAGE = 100;
 
 export interface EntrysProps {
     entrys: Entry[];

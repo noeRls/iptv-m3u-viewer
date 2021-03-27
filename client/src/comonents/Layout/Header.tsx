@@ -1,9 +1,6 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import {
     AppBar,
-    IconButton,
-    Link,
-    ListItem,
     ListItemIcon,
     ListItemText,
     makeStyles,

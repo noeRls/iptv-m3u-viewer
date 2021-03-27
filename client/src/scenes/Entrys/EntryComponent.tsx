@@ -1,6 +1,6 @@
-import { Card, CardActionArea, CardContent, CardMedia, makeStyles, Typography } from '@material-ui/core';
+import { Card, Typography } from '@material-ui/core';
 import React, { useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Entry } from 'types';
 import style from './entry.module.css';
 import { snackBarMessagePublished, snackbarVisibillityChanged } from 'store/reducer'
