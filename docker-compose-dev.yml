@@ -2,27 +2,12 @@
 version: "3"
 
 services:
-  server:
-    ports:
-      - "8081:8081"
-    entrypoint: sh -c "sleep 10 && npm run-script db && npm run-script dev"
-    volumes:
-      - ./server/src:/app/src
-      - ./server/prisma:/app/prisma
-    environment:
-      NODE_ENV: development
-
   client:
     ports:
       - "3000:3000"
     stdin_open: true
     environment:
       NODE_ENV: development
-      REACT_APP_API_URL: http://localhost:8081
     volumes:
       - ./client/src:/app/src
       - ./client/public:/app/public
-
-  database:
-    ports:
-      - "5432:5432"

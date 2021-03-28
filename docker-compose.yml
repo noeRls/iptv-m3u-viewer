@@ -1,25 +1,5 @@
 version: "3"
 
 services:
-  server:
-    build: ./server
-    restart: unless-stopped
-    environment:
-      PORT: 8081
-      CORS: all
-      DATABASE_URL: postgresql://postgres:password@database:5432/hwexporter
-      API_URL: http://localhost:8081
-    depends_on:
-      - database
-
   client:
     build: ./client
-    environment:
-      REACT_APP_API_URL: http://localhost:8081
-
-  database:
-    image: postgres:latest
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: hwexporter

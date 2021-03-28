@@ -16,7 +16,12 @@ import { useHistory } from 'react-router';
 const useStyle = makeStyles({
     listIcon: {
         color: 'white',
+        minWidth: '0px',
+        paddingRight: '10px'
     },
+    title: {
+        paddingRight: '20px'
+    }
 });
 
 export const Header = () => {
@@ -43,7 +48,7 @@ export const Header = () => {
     return (
         <AppBar position="static">
             <Toolbar>
-                <Typography variant="h6">M3U Viewer</Typography>
+                <Typography variant="h6" className={overrideStyle.title} >IPTV M3U Viewer</Typography>
                 {navigationItems.map((item) => (
                     <div key={item.text} onClick={() => history.push(item.url)}>
                         <MenuItem>
