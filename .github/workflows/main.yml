@@ -19,9 +19,9 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Build Image
-            docker build . -t iptv-m3u-client
+        run: docker build . -t iptv-m3u-client
       - name: Check lint
-            docker run iptv-m3u-client npm run-script lint
+        run: docker run iptv-m3u-client npm run-script lint
 
   push:
     # Ensure test job passes before pushing image.
