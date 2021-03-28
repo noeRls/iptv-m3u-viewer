@@ -3,3 +3,5 @@ version: "3"
 services:
   client:
     build: ./client
+    environment:
+      REACT_APP_API_URL: http://localhost:8081

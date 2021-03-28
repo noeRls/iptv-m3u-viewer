@@ -10,4 +10,5 @@ services:
     build:
       args:
         NODE_ENV: production
+        REACT_APP_API_URL: http://localhost:8081
     restart: unless-stopped
