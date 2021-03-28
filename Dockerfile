@@ -14,4 +14,4 @@ ARG REACT_APP_API_URL
 
 RUN if [ "$NODE_ENV" = "production" ]; then REACT_APP_API_URL=${REACT_APP_API_URL} npm run-script build; fi
 
-CMD [ "serve" "-s" "build/" "-l" "3000" ]
+CMD [ "serve", "-s", "build/", "-l", "3000" ]
