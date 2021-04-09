@@ -1,8 +1,20 @@
 import { createSelector } from 'reselect'
 import { selectAppState } from './app';
-import { Entry, Filter } from 'types';
+import { Entry, File, Filter } from 'types';
 
-export const selectFiles = createSelector(selectAppState, state => state.files);
+export const selectFileFilter = createSelector(selectAppState, state => state.fileFilter);
+export const selectAllFiles = createSelector(selectAppState, state => state.files);
+export const selectFiles = createSelector(
+    selectAllFiles,
+    selectFileFilter,
+    (files, fileFilter): File[] => {
+        if (!fileFilter || fileFilter.length === 0) {
+            return files;
+        }
+        const file = files.find(file => file.name === fileFilter);
+        return file ? [file] : [];
+    }
+);
 
 export const selectPemanentFilter = createSelector(selectAppState, state => state.permanentFilter);
 

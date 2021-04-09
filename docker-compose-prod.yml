@@ -5,10 +5,7 @@ services:
     ports:
       - "3000:3000"
     entrypoint: npx serve -s build/ -l 3000
-    environment:
-      NODE_ENV: production
     build:
       args:
         NODE_ENV: production
-        REACT_APP_API_URL: http://localhost:8081
     restart: unless-stopped

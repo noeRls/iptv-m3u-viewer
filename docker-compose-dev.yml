@@ -7,8 +7,6 @@ services:
       - "3000:3000"
     stdin_open: true
     entrypoint: npm start
-    environment:
-      NODE_ENV: development
     volumes:
       - ./client/src:/app/src
       - ./client/public:/app/public

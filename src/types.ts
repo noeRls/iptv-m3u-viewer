@@ -9,6 +9,7 @@ export interface Entry {
     groupName: string,
     logo: string,
     name: string,
+    fileName: string,
     language: string,
     contry: string,
     url: string,

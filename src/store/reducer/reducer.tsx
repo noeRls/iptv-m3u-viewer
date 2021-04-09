@@ -8,8 +8,9 @@ import { localStorageSet } from 'services/utils';
 export interface AppSliceState {
     loaded: boolean,
     files: File[],
-    search: string
-    groupFilter: string
+    search: string,
+    groupFilter: string,
+    fileFilter: string,
     permanentFilter: Filter[],
     usingPermanentFilter: boolean,
     snakbar: {
@@ -21,6 +22,7 @@ export interface AppSliceState {
 
 const initialState: AppSliceState = {
     loaded: false,
+    fileFilter: '',
     search: '',
     usingPermanentFilter: true,
     groupFilter: '',
@@ -87,6 +89,9 @@ export const appSlice = createSlice({
         },
         setUsingPermanentFilter: (state, { payload }: PayloadAction<boolean>) => {
             state.usingPermanentFilter = payload;
+        },
+        setFileFilter: (state, { payload }: PayloadAction<string>) => {
+            state.fileFilter = payload;
         }
     },
     extraReducers: (builder) => {
@@ -118,6 +123,7 @@ export const {
     deleteFilter,
     deleteFile,
     setGroupNameFilter,
+    setFileFilter,
     snackBarMessagePublished,
     snackbarVisibillityChanged,
     setUsingPermanentFilter,

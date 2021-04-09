@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { parse } from 'iptv-playlist-parser';
 import { STORAGE_KEY } from 'services/constants';
-import { selectFiles } from 'store/selector/entrys';
+import { selectAllFiles } from 'store/selector/entrys';
 import { RootState } from 'store/store';
 import { File, Filter } from 'types';
 import { localStoageGet, localStorageSet } from 'services/utils';
@@ -9,7 +9,7 @@ import { localStoageGet, localStorageSet } from 'services/utils';
 export const loadFile = createAsyncThunk('files/load', async ({ name, data }: { name: string, data: string }, thunkAPI): Promise<File> => {
     const file = parse(data);
     let savePath: string | null = null;
-    const files = selectFiles(thunkAPI.getState() as RootState)
+    const files = selectAllFiles(thunkAPI.getState() as RootState)
     for (let i = 0; ; i++) {
         savePath = `file:${name}${i}`;
         if (!files.some(f => f.savedPath === savePath)) {
@@ -23,6 +23,7 @@ export const loadFile = createAsyncThunk('files/load', async ({ name, data }: { 
         savedPath: savePath,
         entrys: file.items.map(item => ({
             groupName: item.group.title,
+            fileName: name,
             logo: item.tvg.logo,
             language: item.tvg.language,
             name: item.name,
