@@ -6,6 +6,7 @@ import style from './entry.module.css';
 import { snackBarMessagePublished, snackbarVisibillityChanged } from 'store/reducer'
 import { selectAllFiles, selectFileFilter } from 'store/selector/entrys';
 import { DisplayIf } from 'comonents/DisplayIf';
+import copy from 'copy-to-clipboard';
 
 interface EntryComponentProps {
     entry: Entry;
@@ -17,12 +18,13 @@ export const EntryComponent = ({ entry }: EntryComponentProps) => {
     const files = useSelector(selectAllFiles);
     const shouldDisplayFile = fileFilter.length === 0 && files.length > 1;
     const onClick = useCallback(() => {
+        const success = copy(entry.url);
         navigator.clipboard.writeText(entry.url);
         dispatch(snackbarVisibillityChanged(false));
         setTimeout(() => {
             dispatch(snackBarMessagePublished({
-                message: `Link Copied - ${entry.name}`,
-                severity: 'success',
+                message: success ? `Link Copied - ${entry.name}` : 'Failed to copy link',
+                severity: success ? 'success' : 'error',
             }));
         }, 0);
     }, [entry, dispatch]);
