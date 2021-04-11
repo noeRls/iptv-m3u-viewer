@@ -19,7 +19,6 @@ export const EntryComponent = ({ entry }: EntryComponentProps) => {
     const shouldDisplayFile = fileFilter.length === 0 && files.length > 1;
     const onClick = useCallback(() => {
         const success = copy(entry.url);
-        navigator.clipboard.writeText(entry.url);
         dispatch(snackbarVisibillityChanged(false));
         setTimeout(() => {
             dispatch(snackBarMessagePublished({
