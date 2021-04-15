@@ -23,10 +23,25 @@ jobs:
       - name: Check lint
         run: docker run iptv-m3u-client npm run-script lint
 
-  push:
-    # Ensure test job passes before pushing image.
+  gh-pages:
     needs: test
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v2.3.1
+      - name: Install
+        run: npm install
+      - name: Build
+        run: npm run build
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@4.1.1
+        with:
+          branch: gh-pages # The branch the action should deploy to.
+          folder: build # The folder the action should deploy.
 
+  push:
+    needs: test
     runs-on: ubuntu-latest
     if: github.event_name == 'push'
 
