@@ -23,7 +23,7 @@ function App() {
             <Switch>
                 <PrivateRoute path={urls.files} component={Files} />
                 <PrivateRoute path={urls.filters} component={FiltersPage} />
-                <PrivateRoute path={urls.home} component={EntrysPage} />
+                <PrivateRoute component={EntrysPage} />
             </Switch>
         </Layout>
     );
